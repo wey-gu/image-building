@@ -10,7 +10,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 # Install dependencies
 RUN apt-get update && apt-get install -y poppler-utils tzdata tree openjdk-17-jdk && rm -rf /var/lib/apt/lists/* && \
     python3 -m pip install --upgrade pip && \
-    python3 -m pip install tiktoken tika nltk torch>=2.4.0 && \
+    python3 -m pip install tiktoken tika nltk && \
     python3 -c "import tiktoken; tiktoken.encoding_for_model('gpt-3.5-turbo'); tiktoken.get_encoding('gpt2')" && \
     python3 -m nltk.downloader punkt stopwords wordnet averaged_perceptron_tagger punkt_tab && \
     touch /tmp/dummy.txt && echo "dummy" > /tmp/dummy.txt && \
