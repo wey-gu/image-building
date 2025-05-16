@@ -26,6 +26,3 @@ RUN apt-get update && apt-get install -y poppler-utils tzdata tree openjdk-17-jd
 # python3
 # import tika
 # tika.initVM()
-
-# TODO: it seems now in arm64, tika is not working, need to find a way to fix it later.
-#       ref: https://github.com/abhilesh/apache-tika-arm
