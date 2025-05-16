@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y poppler-utils tzdata tree openjdk-17-jd
     python3 -c "import tiktoken; tiktoken.encoding_for_model('gpt-3.5-turbo'); tiktoken.get_encoding('gpt2')" && \
     python3 -m nltk.downloader punkt stopwords wordnet averaged_perceptron_tagger punkt_tab && \
     touch /tmp/dummy.txt && echo "dummy" > /tmp/dummy.txt && \
-    python3 -c "import tika; tika.initVM(); from tika import parser; parser.from_file('/tmp/dummy.txt')" && \
-    rm -f /tmp/dummy.txt /tmp/tika-server.jar.md5 /tmp/tika.log /tmp/tika-server.log
+    python3 -c "import os; os.environ['TIKA_STARTUP_SLEEP']='10'; os.environ['TIKA_STARTUP_MAX_RETRY']='20'; import tika; tika.initVM(); from tika import parser; parser.from_file('/tmp/dummy.txt')" && \
+    rm -f /tmp/dummy.txt /tmp/tika.log /tmp/tika-server.log
 
 # Command for dual arch build:
 # docker buildx build --platform linux/amd64,linux/arm64 -t weygu/uvicorn-gunicorn-fastapi:python3.10 --push -f Dockerfile.base .
