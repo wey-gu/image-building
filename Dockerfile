@@ -7,6 +7,8 @@
 
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 
+ENV TIKA_SERVER_JAR="file:////tika-server-standard.jar"
+
 # Install dependencies
 RUN apt-get update && apt-get install -y poppler-utils tzdata tree openjdk-17-jdk && rm -rf /var/lib/apt/lists/* && \
     python3 -m pip install --upgrade pip && \
