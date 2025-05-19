@@ -7,8 +7,6 @@
 
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10
 
-ENV TIKA_SERVER_JAR="file:////tmp/tika-server.jar"
-
 # Install dependencies
 RUN apt-get update && apt-get install -y poppler-utils tzdata tree openjdk-17-jdk && rm -rf /var/lib/apt/lists/* && \
     python3 -m pip install --upgrade pip && \
@@ -18,6 +16,8 @@ RUN apt-get update && apt-get install -y poppler-utils tzdata tree openjdk-17-jd
     touch /tmp/dummy.txt && echo "dummy" > /tmp/dummy.txt && \
     python3 -c "import os; os.environ['TIKA_STARTUP_SLEEP']='10'; os.environ['TIKA_STARTUP_MAX_RETRY']='20'; import tika; tika.initVM(); from tika import parser; parser.from_file('/tmp/dummy.txt')" && \
     rm -f /tmp/dummy.txt /tmp/tika.log /tmp/tika-server.log
+
+ENV TIKA_SERVER_JAR="file:///tmp/tika-server.jar"
 
 # Command for dual arch build:
 # docker buildx build --platform linux/amd64,linux/arm64 -t weygu/uvicorn-gunicorn-fastapi:python3.10 --push -f Dockerfile.base .
